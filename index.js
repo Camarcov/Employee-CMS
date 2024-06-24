@@ -1,5 +1,4 @@
 const inquirer = require('inquirer')
-const { default: PasswordPrompt } = require('inquirer/lib/prompts/password')
 const { Pool } = require('pg')
 require('dotenv').config
 
@@ -20,6 +19,8 @@ const viewAllEmployees = async () => {
 
 const viewAllRoles = async () => {
     try {
+        const response = await pool.query('SELECT title, salary, department_name FROM roles JOIN department ON department.id = roles.department_id');
+        console.table(response.rows); 
 
     } catch (err) {
         console.log(err)
@@ -67,3 +68,5 @@ const updateEmployee = async () => {
         console.log(err)
     }
 };
+
+module.exports = { viewAllRoles }
