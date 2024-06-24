@@ -1,6 +1,6 @@
 const inquirer = require('inquirer')
 const { Pool } = require('pg')
-require('dotenv').config
+require('dotenv').config()
 
 const pool = new Pool({
     database: process.env.DB_NAME,
@@ -11,6 +11,11 @@ const pool = new Pool({
 //functions for viewing
 const viewAllEmployees = async () => {
     try {
+        const response = await pool.query(
+            'SELECT * FROM employee'
+        );
+
+        console.table(response.rows)
 
     } catch (err) {
         console.log(err)
@@ -20,7 +25,7 @@ const viewAllEmployees = async () => {
 const viewAllRoles = async () => {
     try {
         const response = await pool.query('SELECT title, salary, department_name FROM roles JOIN department ON department.id = roles.department_id');
-        console.table(response.rows); 
+        console.table(response.rows);
 
     } catch (err) {
         console.log(err)
@@ -29,6 +34,8 @@ const viewAllRoles = async () => {
 
 const viewAllDepartments = async () => {
     try {
+        const response = await pool.query('SELECT * FROM department');
+        console.table(response.rows)
 
     } catch (err) {
         console.log(err)
@@ -69,4 +76,4 @@ const updateEmployee = async () => {
     }
 };
 
-module.exports = { viewAllRoles }
+module.exports = { viewAllRoles, viewAllDepartments, viewAllEmployees }
