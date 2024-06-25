@@ -129,20 +129,60 @@ const addRole = async () => {
 };
 
 const addDepartment = async () => {
-    try {
+    const newDepartment = await inquirer.prompt([
+        {
+            name: 'department_name',
+            message: 'Name the new department'
+        }
+    ])
 
+    const { department_name } = newDepartment
+
+    try {
+        await pool.query(
+            'INSERT INTO department (department_name) VALUES ($1)',
+            [department_name]
+        )
+        console.log(`Successfully added ${department_name}`)
     } catch (err) {
         console.log(err)
     }
 };
 
 //function for updating
-const updateEmployee = async () => {
-    try {
+const updateEmployeeRole = async () => {
+    const updatedRole = await inquirer.prompt([
+        //prompts named after employee model
+        {
+            name: 'employee_id',
+            message: `Enter the Employee's ID number`
+        },
 
+        {
+            name: 'role_id',
+            message: `Enter the new role ID for the employee`
+        },
+    ])
+
+    const { employee_id, role_id } = updatedRole
+
+    try {
+        await pool.query(
+            'UPDATE employee SET role_id = $1 WHERE id = $2',
+            [role_id, employee_id]
+        )
+        console.log(`Role updated successfully`)
     } catch (err) {
         console.log(err)
     }
 };
 
-module.exports = { viewAllRoles, viewAllDepartments, viewAllEmployees, addEmployee, addRole }
+module.exports = {
+    viewAllRoles,
+    viewAllDepartments,
+    viewAllEmployees,
+    addEmployee,
+    addRole,
+    addDepartment,
+    updateEmployeeRole
+}

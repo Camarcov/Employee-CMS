@@ -1,5 +1,5 @@
 const inquirer = require('inquirer')
-const { viewAllRoles, viewAllDepartments, viewAllEmployees, addEmployee, addRole } = require('./index')
+const { viewAllRoles, viewAllDepartments, viewAllEmployees, addEmployee, addRole, addDepartment, updateEmployeeRole } = require('./index')
 
 //list of questions
 const questions = [
@@ -32,7 +32,7 @@ function init() {
                 addEmployee()
                 break
             case 'Update Employee Role':
-                return
+                updateEmployeeRole()
                 break
             case 'View All Roles':
                 viewAllRoles()
@@ -44,7 +44,7 @@ function init() {
                 viewAllDepartments()
                 break
             case 'Add Department':
-                return
+                addDepartment()
                 break
             case 'Quit':
                 console.log('Qutting')
