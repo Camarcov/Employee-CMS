@@ -1,5 +1,4 @@
 const inquirer = require('inquirer');
-const { default: Choice } = require('inquirer/lib/objects/choice');
 const { Pool } = require('pg')
 require('dotenv').config()
 
@@ -93,24 +92,9 @@ const addRole = async () => {
             message: 'Enter the salary for the new role'
         },
         {
-            type: 'list',
             name: 'department_id',
             message: 'Select the department this role falls under',
             //made the choices an array of objects, giving each department name a value matching their department_id
-            choices: [
-                {
-                    name: 'Produce',
-                    value: 1
-                },
-                {
-                    name: 'Front End',
-                    value: 2
-                },
-                {
-                    name: 'Warehouse',
-                    value: 3
-                },
-            ],
         }
     ])
 
