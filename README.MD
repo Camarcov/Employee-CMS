@@ -22,6 +22,9 @@ Clone the repository from github.
 
 Create a .env file with filled in information from the .env.EXAMPLE file, after that initialize the database then run `node server.js` and go through the prompts.
 
+## Walkthrough
+https://drive.google.com/file/d/1jyqPgBBlJgCqswweGhiOumOTTAnrVR1V/view
+
 ## License
 This repository uses [MIT License](https://opensource.org/licenses/MIT) for more information click the link.
 
