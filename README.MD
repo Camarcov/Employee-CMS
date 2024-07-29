@@ -24,7 +24,9 @@ Create a .env file with filled in information from the .env.EXAMPLE file, after 
 
 ## Walkthrough / Screenshot
 https://drive.google.com/file/d/1jyqPgBBlJgCqswweGhiOumOTTAnrVR1V/view
-View of the CLI [![image.png](https://i.postimg.cc/fTC0P4Yb/image.png)](https://postimg.cc/4mKdKSLC)
+
+View of the CLI 
+[![image.png](https://i.postimg.cc/fTC0P4Yb/image.png)](https://postimg.cc/4mKdKSLC)
 
 ## License
 This repository uses [MIT License](https://opensource.org/licenses/MIT) for more information click the link.
