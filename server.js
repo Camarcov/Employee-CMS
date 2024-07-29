@@ -1,7 +1,6 @@
 const inquirer = require('inquirer')
 const { Pool } = require('pg')
 require('dotenv').config()
-// const { viewAllRoles, viewAllDepartments, viewAllEmployees, addEmployee, addRole, addDepartment, updateEmployeeRole } = require('./index')
 
 //list of questions
 const questions = [
@@ -21,12 +20,15 @@ const questions = [
         ],
     }
 ]
+
+//pg pool is what we're using the query the db
 const pool = new Pool({
     database: process.env.DB_NAME,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     host: 'localhost',
 })
+
 //functions for viewing
 const viewAllEmployees = async () => {
     try {
@@ -34,7 +36,9 @@ const viewAllEmployees = async () => {
             'SELECT * FROM employee'
         );
 
+        //displaying the results
         console.table(response.rows)
+        //reruns the application
         init()
 
     } catch (err) {
@@ -47,7 +51,9 @@ const viewAllRoles = async () => {
         const response = await pool.query(
             'SELECT title, salary, department_name FROM roles JOIN department ON department.id = roles.department_id'
         );
+        //displaying the results
         console.table(response.rows);
+        //reruns the aplication
         init()
     } catch (err) {
         console.log(err)
@@ -59,7 +65,9 @@ const viewAllDepartments = async () => {
         const response = await pool.query(
             'SELECT * FROM department'
         );
+        //display the results
         console.table(response.rows)
+        //reruns the application
         init()
 
     } catch (err) {
@@ -89,6 +97,7 @@ const addEmployee = async () => {
     //destructuring the employee object for use
     const { first_name, last_name, role_id } = employee
 
+    //rerunning application
     init()
     try {
         await pool.query(
@@ -96,6 +105,8 @@ const addEmployee = async () => {
             'INSERT INTO employee (first_name, last_name, role_id) VALUES ($1, $2, $3)',
             [first_name, last_name, role_id]
         )
+
+        //logging 'Employee Saved' just to give user some feedback
         console.log('Employee Saved')
 
     } catch (err) {
@@ -120,14 +131,18 @@ const addRole = async () => {
         }
     ])
 
+    //destructuring the object for use
     const { title, salary, department_id } = roleInfo
 
+    //rerunning application
     init()
+
     try {
         await pool.query(
             'INSERT INTO roles (title, salary, department_id) VALUES ($1, $2, $3)',
             [title, salary, department_id]
         )
+        //logging something for user experience
         console.log('Role added successfully')
 
     } catch (err) {
@@ -136,13 +151,14 @@ const addRole = async () => {
 };
 
 const addDepartment = async () => {
+    //asking related questions, prompts named after model
     const newDepartment = await inquirer.prompt([
         {
             name: 'department_name',
             message: 'Name the new department'
         }
     ])
-
+    //destructuring the object
     const { department_name } = newDepartment
 
     init()
@@ -160,7 +176,7 @@ const addDepartment = async () => {
 //function for updating
 const updateEmployeeRole = async () => {
     const updatedRole = await inquirer.prompt([
-        //prompts named after employee model
+        //asking related questions, prompts named after model
         {
             name: 'employee_id',
             message: `Enter the Employee's ID number`
@@ -172,6 +188,7 @@ const updateEmployeeRole = async () => {
         },
     ])
 
+    //destructuring the object
     const { employee_id, role_id } = updatedRole
 
     init()
@@ -186,9 +203,10 @@ const updateEmployeeRole = async () => {
     }
 };
 
-// on start runs this function
+//function for the CMS
 const init = () => {
     inquirer.prompt(questions).then((data) => {
+        //essentially an if statement based on the user response, if the case is matched calls the function
         switch (data.response) {
             case 'View All Employees':
                 viewAllEmployees()
@@ -218,38 +236,6 @@ const init = () => {
         }
     })
 }
-// function init() {
-//     // Prompt the user with the defined questions
-//     inquirer.prompt(questions).then((data) => {
-//         // Check which choice was selected and call the corresponding function
-//         if (data.response === 'View All Departments') {
-//             viewAllDepartments();
-//         }
-//         if (data.response === 'View All Roles') {
-//             viewAllRoles();
-//         }
-//         if (data.response === 'Add Department') {
-//             addDepartment();
-//         }
-//         if (data.response === 'View All Employees') {
-//             viewAllEmployees();
-//         }
-//         if (data.response === 'Add Employee') {
-//             addEmployee();
-//         }
-//         if (data.response === 'Update Employee Role') {
-//             updateEmployeeRole();
-//         }
-//         if (data.response === 'Add Role') {
-//             addRole();
-//         }
-//         // Exit the program if the user chooses to quit
-//         if (data.response === 'Quit') {
-//             console.log('Quitting');
-//         }
-//     })
-// };
-//calls the function
-init()
 
-module.exports = { init }
+// on start runs this function
+init()

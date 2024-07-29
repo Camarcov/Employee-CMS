@@ -93,7 +93,7 @@ const addRole = async () => {
         },
         {
             name: 'department_id',
-            message: 'Select the department this role falls under',
+            message: 'Enter the department number for the new role',
             //made the choices an array of objects, giving each department name a value matching their department_id
         }
     ])
